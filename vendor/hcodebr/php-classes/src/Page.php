@@ -14,7 +14,7 @@ class Page {
 		"data"=>[]
 	];
 
-	public function __construct($opts = array())
+	public function __construct($opts = array(), $tpl_dir = "/e-commerce/views/")
 	{
 
 		$this->options = array_merge($this->defaults, $opts);
@@ -22,7 +22,7 @@ class Page {
 		$config = array(
 			//A variavel DOCUMENT_ROOT é a pasta htdocs do xampp
 		    "base_url"      => null,
-		    "tpl_dir"       => $_SERVER['DOCUMENT_ROOT']."/e-commerce/views/",
+		    "tpl_dir"       => $_SERVER['DOCUMENT_ROOT']. $tpl_dir,
 		    "cache_dir"     => $_SERVER['DOCUMENT_ROOT']."/e-commerce/views-cache/",
 		    "debug"         => false
 		);
