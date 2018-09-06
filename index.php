@@ -12,11 +12,12 @@ $app->config('debug', true);
 $app->get('/', function() {
     
 	$page = new Page();
-	$page-setTpll("index");
+	$page->setTpl("index");
 
 
 });
 
 $app->run();
+
 
  ?>
