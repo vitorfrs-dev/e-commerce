@@ -14,7 +14,7 @@ namespace Hcode;
 
  		switch ($method) {
  			case 'get':
- 				$this->values[$fieldName];
+ 				return $this->values[$fieldName];
  			break;
 
  			case 'set':
