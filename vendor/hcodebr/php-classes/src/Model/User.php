@@ -248,7 +248,7 @@ class User extends Model {
         $sql->query("UPDATE tb_userspasswordrecoveries SET dtrecovery = NOW() WHERE
         idrecovery = :idrecovery", array(
             ":idrecovery" => $idrecovery
-        ))
+        ));
 
     }
 
@@ -259,7 +259,7 @@ class User extends Model {
         $sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser", array(
             ":password" => $password,
             "iduser"    => $this->getIduser()
-        ))
+        ));
 
     }
 
