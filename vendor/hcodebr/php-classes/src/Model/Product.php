@@ -20,6 +20,24 @@ class Product extends Model {
 
     }
 
+
+    public static function checkList($list) 
+    {
+        /* Método responsavel por resgatar a imagem do produto
+        uma vez que ela não esta armazenada no banco de dados*/
+
+        foreach ($list as &$row) {
+
+            $p = new Product();
+            $p->setData($row);
+            $row = $p->getValues();
+
+        }
+
+        return $list;
+
+    }
+
     public function save()
     {
 
