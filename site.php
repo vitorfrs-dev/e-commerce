@@ -311,7 +311,73 @@ $app->post("/forgot/reset", function() {
 		
 		$page->setTpl("forgot-reset-success");
 
-	});
+});
+
+$app->get('/profile', function() {
+
+	User::verifyLogin(false);
+
+	$user = User::getFromSession();
+
+	$page = new Page();
+
+	$page->setTpl("profile", [
+		'user' => $user->getValues(),
+		'profileMsg' => User::getSuccess(),
+		'profileError' => User::getError()
+	]);
+
+});
+
+$app->post('/profile', function() {
+
+	User::verifyLogin(false);
+
+	if (!isset($_POST['desperson']) || $_POST['desperson'] === '') {
+		User::setError("Preencha o seu nome");
+		header('Location: /profile');
+		exit;
+	}
+
+	
+	if (!isset($_POST['desemail']) || $_POST['desemail'] === '') {
+		User::setError("Preencha o seu email");
+		header('Location: /profile');
+		exit;
+	}
+
+	$user = User::getFromSession();
+
+	if ($_POST['desemail'] !== $user->getdesemail()) {
+
+		if (User::checkLoginExist($_POST['desemail']) === true) {
+
+			User::setError('Esse endereço de email já esta cadastrado');
+			header('Location: /profile');
+			exit;
+
+		}
+
+	}
+
+	$_POST['inadmin'] = $user->getinadmin();
+	$_POST['despassword'] = $user->getdespassword();
+	$_POST['deslogin'] = $_POST['desemail'];
+
+	/* Bug ===>   Como o método update também criptografa a senha, nesse caso ele já
+	 está pegando a senha criptografada e criptografando novamente, 
+	 nesse caso o usuário não poderá acessar a sua conta novamente*/
+
+	$user->setData($_POST);/*Seta os atributos do objeto com o que o usuário enviou no POST*/
+
+	$user->update();
+
+	User::setSuccess('Dados alterados com sucesso!');
+
+	header('Location: /profile');
+	exit;
+
+});
 
 
 
